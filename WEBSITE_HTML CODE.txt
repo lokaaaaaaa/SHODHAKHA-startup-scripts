@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top Genes with Contradictory Expression Status in Prostate Cancer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .left-panel {
+      width: 35%;
+    }
+
+    .middle-panel {
+      width: 30%;
+      text-align: center;
+    }
+
+    .right-panel {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .panel-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 18px;
+    }
+
+    th, td {
+      padding: 15px 20px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1e3a8a;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f7f9fc;
+    }
+
+    tr:hover {
+      background-color: #eef2f8;
+    }
+
+    img {
+      width: 100%; 
+      max-width: 800px; 
+      height: auto; 
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .filter-button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e3a8a;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 200px;
+      text-align: center;
+    }
+
+    .filter-button:hover {
+      background-color: #3457d5;
+      transform: translateY(-2px);
+    }
+
+    .info-toggle-button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2563eb;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .info-toggle-button:hover {
+      background-color: #3b82f6;
+    }
+
+    .info-box {
+      display: none;
+      background-color: #ffffff;
+      margin-top: 15px;
+      padding: 20px;
+      border-left: 5px solid #1e3a8a;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      text-align: left;
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>Top Genes with Contradictory Expression Status in Prostate Cancer</header>
+
+  <div class="container">
+    
+    <!-- Left Table Panel -->
+    <div class="left-panel">
+      <div class="panel-title">Functional Analysis Results (Top 100 Disease-Transcribed Genes)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Enrichment Score</th>
+            <th>P-value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cell Division</td>
+            <td>4.6219</td>
+            <td>4.3e-3</td>
+          </tr>
+          <tr>
+            <td>Mitochondrion</td>
+            <td>2.8837</td>
+            <td>1.7e-3</td>
+          </tr>
+          <tr>
+            <td>UBL Conjugation</td>
+            <td>2.2713</td>
+            <td>3.1e-3</td>
+          </tr>
+          <tr>
+            <td>DNA/RNA Binding</td>
+            <td>2.1721</td>
+            <td>8.0e-4</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- More Information Collapsible Button -->
+      <button class="info-toggle-button" onclick="toggleInfo()">More Information</button>
+      <div class="info-box" id="infoBox">
+        <b>Explanation of Enrichment:</b><br><br>
+        These functional clusters highlight key pathways affected by genes with contradictory expression in prostate cancer.<br><br>
+        • <b>Cell Division</b>: Disruption in mitosis regulation, a hallmark of tumor progression.<br>
+        • <b>Mitochondrion</b>: Altered energy metabolism—a common trait in aggressive cancers.<br>
+        • <b>UBL Conjugation</b>: Protein tagging affecting degradation and signaling cascades.<br>
+        • <b>DNA/RNA Binding</b>: Implications on transcription factor binding and post-transcriptional errors.<br><br>
+        These results come from enrichment analysis using hypergeometric p-values adjusted for false discovery.
+      </div>
+    </div>
+
+    <!-- Center Image Panel -->
+    <div class="middle-panel">
+      <img id="clusterImage" src="Visualisation(topp100 genes).jpg" alt="Cluster Image" />
+    </div>
+
+    <!-- Right Button Panel -->
+    <div class="right-panel">
+      <div class="panel-title">Select Top % Clusters</div>
+      <div class="button-group">
+        <button class="filter-button" onclick="updateImage('images/img10.jpg')">Top 10%</button>
+        <button class="filter-button" onclick="updateImage('images/img20.jpg')">Top 20%</button>
+        <button class="filter-button" onclick="updateImage('images/img30.jpg')">Top 30%</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to change image based on selected button
+    function updateImage(imageSrc) {
+      document.getElementById('clusterImage').src = imageSrc;
+    }
+
+    // Function to toggle the visibility of the information box
+    function toggleInfo() {
+      const infoBox = document.getElementById('infoBox');
+      infoBox.style.display = (infoBox.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
